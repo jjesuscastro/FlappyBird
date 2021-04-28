@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7475129817936680744}
   - component: {fileID: 8799237870338869063}
+  - component: {fileID: 2127365521}
   m_Layer: 0
   m_Name: Pipes
   m_TagString: Pipe
@@ -49,6 +50,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 1.89}
   m_Direction: 0
+--- !u!114 &2127365521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537096111199728241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9acb888eb3a91d4d9f649797946e30e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!1 &6496257892338491980
 GameObject:
   m_ObjectHideFlags: 0
