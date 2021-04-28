@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
         if (Input.GetMouseButtonDown(0) && gameStartUI.activeInHierarchy)
             GameStart();
 #endif
