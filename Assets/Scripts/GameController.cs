@@ -25,8 +25,20 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
+#if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0) && gameStartUI.activeInHierarchy)
             GameStart();
+#endif
+
+        if (Input.touchCount > 0 && gameStartUI.activeInHierarchy)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                GameStart();
+            }
+        }
     }
 
     void AddScore()

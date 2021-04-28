@@ -25,9 +25,21 @@ public class BirdController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+#if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0) && isMoving)
         {
             Flap();
+        }
+#endif
+
+        if (Input.touchCount > 0 && isMoving)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                Flap();
+            }
         }
     }
 
