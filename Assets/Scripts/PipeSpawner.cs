@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,13 +35,12 @@ public class PipeSpawner : MonoBehaviour
     void SpawnChild()
     {
         Transform pipe = transform.GetChild(0);
-        Pipes pipes = pipe.GetComponent<Pipes>();
-        Vector2 pipePosition = pipe.position;
+        Vector3 pipePosition = pipe.position;
 
+        pipe.gameObject.SetActive(false);
         pipePosition.x = mainCamera.transform.position.x + spawnDistance;
         pipePosition.y = Random.Range(-spawnHeight, spawnHeight);
-
-        pipes.SetHeight(spawnHeight);
+        pipePosition.z = spawnHeight;
 
         pipe.position = pipePosition;
         pipe.SetSiblingIndex(transform.childCount - 1);

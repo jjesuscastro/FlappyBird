@@ -8,6 +8,13 @@ public class Pipes : MonoBehaviour
     float height;
     bool moveUp;
 
+    private void OnEnable() {
+        height = transform.position.z;
+
+        Vector2 position = new Vector2(transform.position.x, transform.position.y);
+        transform.position = position;
+    }
+
     void Update()
     {
         if (transform.position.y > height)
