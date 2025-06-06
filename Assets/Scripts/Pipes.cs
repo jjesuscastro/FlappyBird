@@ -5,27 +5,26 @@ using UnityEngine;
 public class Pipes : MonoBehaviour
 {
     public float speed;
-    float height;
-    bool moveUp;
+    private float height;
+    private bool moveUp;
 
     private void OnEnable() {
-        height = transform.position.z;
+        this.height = this.transform.position.z;
 
-        Vector2 position = new Vector2(transform.position.x, transform.position.y);
-        transform.position = position;
+        Vector2 position = new Vector2(this.transform.position.x, this.transform.position.y);
+        this.transform.position = position;
     }
 
-    void Update()
+    private void Update()
     {
-        if (transform.position.y > height)
-            moveUp = false;
-        else if (transform.position.y < -height)
-            moveUp = true;
+        if (this.transform.position.y > this.height)
+            this.moveUp = false;
+        else if (this.transform.position.y < -this.height) this.moveUp = true;
 
-        if (moveUp)
-            transform.position = new Vector2(transform.position.x, transform.position.y + speed * Time.deltaTime);
+        if (this.moveUp)
+            this.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + this.speed * Time.deltaTime);
         else
-            transform.position = new Vector2(transform.position.x, transform.position.y - speed * Time.deltaTime);
+            this.transform.position = new Vector2(this.transform.position.x, this.transform.position.y - this.speed * Time.deltaTime);
     }
 
     public void SetHeight(float height)

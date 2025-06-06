@@ -7,10 +7,10 @@ public class CameraFollow : MonoBehaviour
     public Transform player;
     public float xOffset;
 
-    void Update()
+    private void Update()
     {
-        Vector3 position = transform.position;
-        position.x = player.position.x + xOffset;
-        transform.position = position;
+        Vector3 position = this.transform.position;
+        position.x = this.player.position.x + this.xOffset;
+        this.transform.position = position;
     }
 }

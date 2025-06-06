@@ -6,68 +6,69 @@ using TMPro;
 
 public class GameController : MonoBehaviour
 {
-    public BirdController player;
-    public PipeSpawner pipeSpawner;
-    public GameObject gameStartUI;
-    public GameOver gameOverUI;
-    public TMP_Text scoreText;
-    int highScore;
-    int score = 0;
+    [SerializeField]
+    private BirdController player;
+    [SerializeField]
+    private PipeSpawner pipeSpawner;
+    [SerializeField]
+    private AudioController audioController;
+    [SerializeField]
+    private GameObject gameStartUI;
+    [SerializeField]
+    private GameOver gameOverUI;
+    [SerializeField]
+    private TMP_Text scoreText;
+    
+    private int highScore;
+    private int score = 0;
 
-    void Start()
+    private void Start()
     {
-        player.onPipePassed.AddListener(AddScore);
-        player.onPipeHit.AddListener(GameOver);
-        gameOverUI.okButton.onClick.AddListener(RestartGame);
+        this.player.onFlap.AddListener(delegate {
+            this.audioController.PlayFlap();
+        });
+        this.player.onPipePassed.AddListener(AddScore);
+        this.player.onPipeHit.AddListener(GameOver);
+        this.gameOverUI.okButton.onClick.AddListener(RestartGame);
 
-        highScore = PlayerPrefs.GetInt("highScore");
+        this.highScore = PlayerPrefs.GetInt("highScore");
     }
 
-    void Update()
+    private void AddScore()
     {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-        if (Input.GetMouseButtonDown(0) && gameStartUI.activeInHierarchy)
-            GameStart();
-#endif
-
-        if (Input.touchCount > 0 && gameStartUI.activeInHierarchy)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Began)
-            {
-                GameStart();
-            }
-        }
+        this.score++;
+        this.scoreText.text = this.score.ToString();
+        
+        this.audioController.PlayPoint();
     }
 
-    void AddScore()
-    {
-        score++;
-        scoreText.text = score.ToString();
+    public void GameStart() {
+        if (!this.gameStartUI.activeInHierarchy)
+            return;
+
+        this.gameStartUI.SetActive(false);
+        this.player.StartMoving();
+        this.pipeSpawner.StartSpawning();
     }
 
-    void GameStart()
-    {
-        gameStartUI.SetActive(false);
-        player.StartMoving();
-        pipeSpawner.StartSpawning();
+    private void GameOver() {
+        if (this.player.IsDead)
+            return;
+        
+        this.player.StopMoving();
+        this.pipeSpawner.StopSpawning();
+
+        this.scoreText.gameObject.SetActive(false);
+        this.gameOverUI.gameObject.SetActive(true);
+        this.highScore = (this.highScore > this.score) ? this.highScore : this.score;
+        PlayerPrefs.SetInt("highScore", this.highScore);
+
+        this.gameOverUI.SetScore(this.score, this.highScore);
+        
+        this.audioController.PlayHit();
     }
 
-    void GameOver()
-    {
-        player.StopMoving();
-        pipeSpawner.StopSpawning();
-
-        scoreText.gameObject.SetActive(false);
-        gameOverUI.gameObject.SetActive(true);
-        highScore = (highScore > score) ? highScore : score;
-        PlayerPrefs.SetInt("highScore", highScore);
-
-        gameOverUI.SetScore(score, highScore);
-    }
-
-    void RestartGame()
+    private void RestartGame()
     {
         SceneManager.LoadScene(0);
     }

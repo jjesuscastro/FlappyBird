@@ -8,53 +8,53 @@ public class PipeSpawner : MonoBehaviour
     public float spawnDistance;
     public float spawnHeight;
 
-    bool isSpawning;
-    Camera mainCamera;
-    float timer;
+    private bool isSpawning;
+    private Camera mainCamera;
+    private float timer;
 
-    void Awake()
+    private void Awake()
     {
-        mainCamera = Camera.main;
+        this.mainCamera = Camera.main;
     }
 
-    void Update()
+    private void Update()
     {
-        if (isSpawning)
+        if (this.isSpawning)
         {
-            timer += Time.deltaTime;
+            this.timer += Time.deltaTime;
 
-            if (timer >= spawnTime)
+            if (this.timer >= this.spawnTime)
             {
                 SpawnChild();
 
-                timer = 0;
+                this.timer = 0;
             }
         }
     }
 
-    void SpawnChild()
+    private void SpawnChild()
     {
-        Transform pipe = transform.GetChild(0);
+        Transform pipe = this.transform.GetChild(0);
         Vector3 pipePosition = pipe.position;
 
         pipe.gameObject.SetActive(false);
-        pipePosition.x = mainCamera.transform.position.x + spawnDistance;
-        pipePosition.y = Random.Range(-spawnHeight, spawnHeight);
-        pipePosition.z = spawnHeight;
+        pipePosition.x = this.mainCamera.transform.position.x + this.spawnDistance;
+        pipePosition.y = Random.Range(-this.spawnHeight, this.spawnHeight);
+        pipePosition.z = this.spawnHeight;
 
         pipe.position = pipePosition;
-        pipe.SetSiblingIndex(transform.childCount - 1);
+        pipe.SetSiblingIndex(this.transform.childCount - 1);
         pipe.gameObject.SetActive(true);
     }
 
     public void StartSpawning()
     {
-        isSpawning = true;
-        timer = spawnTime;
+        this.isSpawning = true;
+        this.timer = this.spawnTime;
     }
 
     public void StopSpawning()
     {
-        isSpawning = false;
+        this.isSpawning = false;
     }
 }

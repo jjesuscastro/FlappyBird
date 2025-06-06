@@ -1,103 +1,93 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class BirdController : MonoBehaviour
-{
+public class BirdController : MonoBehaviour {
+    [HideInInspector]
+    public UnityEvent onFlap;
     [HideInInspector]
     public UnityEvent onPipePassed;
     [HideInInspector]
     public UnityEvent onPipeHit;
+    
+    [SerializeField]
+    private float jumpForce = 200f;
+    [SerializeField]
+    private float speed = 10f;
+    [SerializeField]
+    private float maxY;
 
-    public float jumpForce = 200f;
-    public float speed = 10f;
-    public float maxY;
+    [SerializeField]
+    private BirdAnimator birdAnimator;
+    [SerializeField]
+    private Rigidbody2D rigidbody2d;
+    
+    private bool isMoving;
+    private bool isDead;
+    
+    public bool IsDead => this.isDead;
 
-    Rigidbody2D rigidbody2d;
-    bool isMoving;
-    bool isDead;
-
-    void Start()
+    private void FixedUpdate()
     {
-        rigidbody2d = GetComponent<Rigidbody2D>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-        if (Input.GetMouseButtonDown(0) && isMoving)
-        {
-            Flap();
-        }
-#endif
-
-        if (Input.touchCount > 0 && isMoving)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Began)
-            {
-                Flap();
-            }
-        }
-    }
-
-    void FixedUpdate()
-    {
-        if (!isDead)
+        if (!this.isDead)
         {
             //Limit y position and y velocity
-            transform.localPosition = new Vector3(transform.localPosition.x, Mathf.Clamp(transform.localPosition.y, -10f, maxY), transform.localPosition.z);
-            rigidbody2d.velocity = new Vector2(speed, Mathf.Clamp(rigidbody2d.velocity.y, -5, 5));
+            this.transform.localPosition = new Vector3(this.transform.localPosition.x, Mathf.Clamp(this.transform.localPosition.y, -10f, this.maxY), this.transform.localPosition.z);
+            this.rigidbody2d.velocity = new Vector2(this.speed, Mathf.Clamp(this.rigidbody2d.velocity.y, -5, 5));
 
-            if (isMoving)
+            if (this.isMoving)
             {
                 //Tilt the bird down while falling
-                if (rigidbody2d.velocity.y < -0.5)
+                if (this.rigidbody2d.velocity.y < -0.5)
                 {
                     Quaternion target = Quaternion.Euler(0, 0, -45f);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5f);
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, target, Time.deltaTime * 5f);
                 }
-                else if (rigidbody2d.velocity.y > 0)
+                else if (this.rigidbody2d.velocity.y > 0)
                 {
                     Quaternion target = Quaternion.Euler(0, 0, 35f);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 8f);
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, target, Time.deltaTime * 8f);
                 }
             }
         }
     }
 
-    void Flap()
-    {
-        rigidbody2d.velocity = new Vector2(0, 0);
-        rigidbody2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+    public void Flap() {
+        if (!this.isMoving)
+            return;
+        
+        this.rigidbody2d.velocity = new Vector2(0, 0);
+        this.rigidbody2d.AddForce(new Vector2(0, this.jumpForce), ForceMode2D.Impulse);
+
+        this.onFlap?.Invoke();
     }
 
-    public void StartMoving()
-    {
-        rigidbody2d.gravityScale = 1.5f;
-        isMoving = true;
+    public void StartMoving() {
+        this.rigidbody2d.freezeRotation = false;
+        this.rigidbody2d.gravityScale = 1.5f;
+        this.isMoving = true;
     }
 
     public void StopMoving()
     {
-        isMoving = false;
-        isDead = true;
-        rigidbody2d.velocity = new Vector2(0, 0);
+        this.isMoving = false;
+        this.isDead = true;
+        this.rigidbody2d.velocity = new Vector2(0, 0);
+        this.rigidbody2d.freezeRotation = true;
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Pipe"))
-            if (onPipePassed != null)
-                onPipePassed.Invoke();
+        if (col.CompareTag("Pipe")) {
+            this.onPipePassed?.Invoke();
+        }
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.transform.CompareTag("Pipe") || other.transform.CompareTag("Floor"))
-            if (onPipeHit != null)
-                onPipeHit.Invoke();
+        if (other.transform.CompareTag("Pipe") || other.transform.CompareTag("Floor")) {
+            this.onPipeHit?.Invoke();
+        }
     }
 }

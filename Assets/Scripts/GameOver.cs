@@ -15,45 +15,45 @@ public class GameOver : MonoBehaviour
 
     public void SetScore(int scoreValue, int highScoreValue)
     {
-        score.text = scoreValue.ToString();
-        highScore.text = highScoreValue.ToString();
+        this.score.text = scoreValue.ToString();
+        this.highScore.text = highScoreValue.ToString();
 
         SetMedal(scoreValue);
     }
 
-    void SetMedal(int scoreValue)
+    private void SetMedal(int scoreValue)
     {
         if (scoreValue >= 30)
         {
-            Color color = medal.color;
+            Color color = this.medal.color;
             color.a = 1;
-            medal.color = color;
+            this.medal.color = color;
 
-            medal.sprite = medals[2];
+            this.medal.sprite = this.medals[2];
         }
         else if (scoreValue >= 20)
         {
-            Color color = medal.color;
+            Color color = this.medal.color;
             color.a = 1;
-            medal.color = color;
+            this.medal.color = color;
 
-            medal.sprite = medals[1];
+            this.medal.sprite = this.medals[1];
         }
         else if (scoreValue >= 10)
         {
-            Color color = medal.color;
+            Color color = this.medal.color;
             color.a = 1;
-            medal.color = color;
+            this.medal.color = color;
 
-            medal.sprite = medals[0];
+            this.medal.sprite = this.medals[0];
         }
         else
         {
-            Color color = medal.color;
+            Color color = this.medal.color;
             color.a = 0;
-            medal.color = color;
+            this.medal.color = color;
 
-            medal.sprite = null;
+            this.medal.sprite = null;
         }
     }
 }

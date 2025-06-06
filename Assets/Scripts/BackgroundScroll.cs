@@ -16,55 +16,52 @@ public class BackgroundScroll : MonoBehaviour
     private float lastCameraX;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
-        cameraTransform = Camera.main.transform;
-        lastCameraX = cameraTransform.position.x;
-        layers = new Transform[transform.childCount];
+        this.cameraTransform = Camera.main.transform;
+        this.lastCameraX = this.cameraTransform.position.x;
+        this.layers = new Transform[this.transform.childCount];
 
-        for (int i = 0; i < transform.childCount; i++)
-            layers[i] = transform.GetChild(i);
+        for (int i = 0; i < this.transform.childCount; i++) this.layers[i] = this.transform.GetChild(i);
 
-        leftIndex = 0;
-        rightIndex = layers.Length - 1;
+        this.leftIndex = 0;
+        this.rightIndex = this.layers.Length - 1;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        float deltaX = cameraTransform.position.x - lastCameraX;
-        transform.position += Vector3.right * (deltaX * parallaxSpeed);
-        lastCameraX = cameraTransform.position.x;
+        float deltaX = this.cameraTransform.position.x - this.lastCameraX;
+        this.transform.position += Vector3.right * (deltaX * this.parallaxSpeed);
+        this.lastCameraX = this.cameraTransform.position.x;
 
-        if (cameraTransform.position.x < (layers[leftIndex].transform.position.x + viewZone))
+        if (this.cameraTransform.position.x < (this.layers[this.leftIndex].transform.position.x + this.viewZone))
             ScrollLeft();
 
-        if (cameraTransform.position.x > (layers[rightIndex].transform.position.x - viewZone))
+        if (this.cameraTransform.position.x > (this.layers[this.rightIndex].transform.position.x - this.viewZone))
             ScrollRight();
     }
 
     private void ScrollLeft()
     {
-        layers[rightIndex].position = new Vector3(layers[leftIndex].position.x - backgroundSize, layers[leftIndex].position.y, 0);
-        leftIndex = rightIndex;
-        rightIndex--;
+        this.layers[this.rightIndex].position = new Vector3(this.layers[this.leftIndex].position.x - this.backgroundSize, this.layers[this.leftIndex].position.y, 0);
+        this.leftIndex = this.rightIndex;
+        this.rightIndex--;
 
-        if (rightIndex < 0)
-            rightIndex = layers.Length - 1;
+        if (this.rightIndex < 0) this.rightIndex = this.layers.Length - 1;
     }
 
     private void ScrollRight()
     {
-        layers[leftIndex].position = new Vector3(layers[rightIndex].position.x + backgroundSize, layers[leftIndex].position.y, 0);
-        rightIndex = leftIndex;
-        leftIndex++;
+        this.layers[this.leftIndex].position = new Vector3(this.layers[this.rightIndex].position.x + this.backgroundSize, this.layers[this.leftIndex].position.y, 0);
+        this.rightIndex = this.leftIndex;
+        this.leftIndex++;
 
-        if (leftIndex == layers.Length)
-            leftIndex = 0;
+        if (this.leftIndex == this.layers.Length) this.leftIndex = 0;
     }
 
     public Transform[] getLayers()
     {
-        return layers;
+        return this.layers;
     }
 }
