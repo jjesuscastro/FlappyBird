@@ -23,10 +23,12 @@ public class SkinsManager : MonoBehaviour {
             SkinButton skinButton = newSkin.GetComponent<SkinButton>();
             
             skinButton.SetSkin(skin, delegate {
+                PlayerPrefs.SetString("Skin", skin.name);
                 this.birdAnimator.SetFrames(skin);
             });
         }
         
-        this.birdAnimator.SetFrames(this.skins[0]);
+        string selectedSkin = PlayerPrefs.GetString("Skin");
+        this.birdAnimator.SetFrames(string.IsNullOrEmpty(selectedSkin) ? this.skins[0] : this.skins.Find(s => s.name == selectedSkin));
     }
 }
