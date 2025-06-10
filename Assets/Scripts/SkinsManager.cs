@@ -28,6 +28,10 @@ public class SkinsManager : MonoBehaviour {
         }
         
         string selectedSkin = PlayerPrefs.GetString("Skin");
-        this.birdAnimator.SetFrames(this.skins.DefaultIfEmpty(this.skins[0]).First(s => s.name == selectedSkin));
+        try {
+            this.birdAnimator.SetFrames(this.skins.First(s => s.name == selectedSkin));
+        } catch {
+            this.birdAnimator.SetFrames(this.skins[0]);
+        }
     }
 }
