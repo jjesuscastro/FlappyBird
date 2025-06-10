@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 
@@ -20,7 +18,7 @@ public class GameController : MonoBehaviour
     private TMP_Text scoreText;
     
     private int highScore;
-    private int score = 0;
+    private int score;
 
     private void Start()
     {
@@ -29,7 +27,7 @@ public class GameController : MonoBehaviour
         });
         this.player.onPipePassed.AddListener(AddScore);
         this.player.onPipeHit.AddListener(GameOver);
-        this.gameOverUI.okButton.onClick.AddListener(RestartGame);
+        this.gameOverUI.OkButton.onClick.AddListener(RestartGame);
 
         this.highScore = PlayerPrefs.GetInt("highScore");
     }

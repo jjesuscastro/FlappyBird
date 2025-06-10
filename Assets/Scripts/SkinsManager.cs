@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SkinsManager : MonoBehaviour {
-
     [SerializeField]
     private BirdAnimator birdAnimator;
     
@@ -14,10 +12,11 @@ public class SkinsManager : MonoBehaviour {
     [SerializeField]
     private Transform skinsParent;
     
-    [SerializeField]
     private List<Skin> skins;
-
-    private void Start() {
+    
+    public void LoadSkins(List<Skin> skins) {
+        this.skins = skins;
+        
         foreach (Skin skin in this.skins) {
             GameObject newSkin = Instantiate(this.skinPrefab, this.skinsParent);
             SkinButton skinButton = newSkin.GetComponent<SkinButton>();
@@ -29,6 +28,6 @@ public class SkinsManager : MonoBehaviour {
         }
         
         string selectedSkin = PlayerPrefs.GetString("Skin");
-        this.birdAnimator.SetFrames(string.IsNullOrEmpty(selectedSkin) ? this.skins[0] : this.skins.Find(s => s.name == selectedSkin));
+        this.birdAnimator.SetFrames(this.skins.DefaultIfEmpty(this.skins[0]).First(s => s.name == selectedSkin));
     }
 }

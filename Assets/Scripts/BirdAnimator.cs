@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BirdAnimator : MonoBehaviour
@@ -14,14 +12,14 @@ public class BirdAnimator : MonoBehaviour
     private int currentFrame;
 
     public void SetFrames(Skin skin) {
-        this.animationFrames = new Sprite[3] { skin.upSprite, skin.midSprite, skin.downSprite };
+        this.animationFrames = new [] { skin.upSprite, skin.midSprite, skin.downSprite };
         
         this.currentFrame = 0;
     }
 
     private void Update()
     {
-        if (this.animationFrames != null && this.animationFrames.Length > 0)
+        if (this.animationFrames is { Length: > 0 })
         {
             this.timer += Time.deltaTime * this.animationSpeed;
             if (this.timer >= 1f)

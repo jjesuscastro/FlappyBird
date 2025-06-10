@@ -1,23 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class BackgroundScroll : MonoBehaviour
 {
+    [SerializeField]
+    private float viewZone;
+    [SerializeField]
+    private float backgroundSize;
+    [SerializeField]
+    private float parallaxSpeed;
 
-    public float viewZone;
-    public float backgroundSize;
-    public float parallaxSpeed;
-
+    [SerializeField]
+    private Transform[] layers;
+    
     private Transform cameraTransform;
-    public Transform[] layers;
     private int leftIndex;
     private int rightIndex;
     private float lastCameraX;
 
-    // Use this for initialization
     private void Start()
     {
+        if (Camera.main is null) {
+            throw new NullReferenceException(nameof(Camera.main));
+        }
+        
         this.cameraTransform = Camera.main.transform;
         this.lastCameraX = this.cameraTransform.position.x;
         this.layers = new Transform[this.transform.childCount];
@@ -28,7 +34,6 @@ public class BackgroundScroll : MonoBehaviour
         this.rightIndex = this.layers.Length - 1;
     }
 
-    // Update is called once per frame
     private void Update()
     {
         float deltaX = this.cameraTransform.position.x - this.lastCameraX;
@@ -58,10 +63,5 @@ public class BackgroundScroll : MonoBehaviour
         this.leftIndex++;
 
         if (this.leftIndex == this.layers.Length) this.leftIndex = 0;
-    }
-
-    public Transform[] getLayers()
-    {
-        return this.layers;
     }
 }

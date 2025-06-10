@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PipeSpawner : MonoBehaviour
 {
-    public float spawnTime;
-    public float spawnDistance;
-    public float spawnHeight;
+    [SerializeField]
+    private float spawnTime;
+    [SerializeField]
+    private float spawnDistance;
+    [SerializeField]
+    private float spawnHeight;
 
     private bool isSpawning;
     private Camera mainCamera;

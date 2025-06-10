@@ -673,6 +673,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e95dcf91b9569e548a1c9c7fc8523315, type: 3}
+--- !u!1 &394977693
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 394977695}
+  - component: {fileID: 394977694}
+  m_Layer: 0
+  m_Name: SkinsDataPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &394977694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394977693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f546ab53356dea45bc8a715f636f3d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinsManager: {fileID: 1411061426}
+--- !u!4 &394977695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394977693}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &429565985
 GameObject:
   m_ObjectHideFlags: 0
@@ -3009,11 +3054,6 @@ MonoBehaviour:
   skinPrefab: {fileID: 5561573198126324449, guid: 8aaa614d8aa4ade4db4da7aa189c46df,
     type: 3}
   skinsParent: {fileID: 811108933}
-  skins:
-  - {fileID: 11400000, guid: 407d88f4c836d874db639bd760cf1035, type: 2}
-  - {fileID: 11400000, guid: 3e363a224e5bc5b42bb415a59b70d91c, type: 2}
-  - {fileID: 11400000, guid: debb0aee362addc46affb09c51e1617b, type: 2}
-  - {fileID: 11400000, guid: 750ec19dd1c380d4996f6105b30318a7, type: 2}
 --- !u!4 &1411061427
 Transform:
   m_ObjectHideFlags: 0
@@ -3826,6 +3866,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa2c6f61066b574c890083da9d7ae6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onFlap:
+    m_PersistentCalls:
+      m_Calls: []
   onPipePassed:
     m_PersistentCalls:
       m_Calls: []
@@ -4465,3 +4508,4 @@ SceneRoots:
   - {fileID: 4428212}
   - {fileID: 150202228}
   - {fileID: 1411061427}
+  - {fileID: 394977695}

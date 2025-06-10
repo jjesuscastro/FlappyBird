@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform player;
-    public float xOffset;
+    [SerializeField]
+    private Transform player;
+    [SerializeField]
+    private float xOffset;
 
     private void Update()
     {

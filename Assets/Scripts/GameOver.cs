@@ -1,17 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class GameOver : MonoBehaviour
 {
-    public Image medal;
-    public TMP_Text score;
-    public TMP_Text highScore;
-    public Button okButton;
+    [SerializeField]
+    private Image medal;
+    [SerializeField]
+    private TMP_Text score;
+    [SerializeField]
+    private TMP_Text highScore;
+    [SerializeField]
+    private Button okButton;
 
-    public Sprite[] medals;
+    [SerializeField]
+    private Sprite[] medals;
+    
+    public Button OkButton { get { return this.okButton; } }
 
     public void SetScore(int scoreValue, int highScoreValue)
     {

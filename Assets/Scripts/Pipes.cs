@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Pipes : MonoBehaviour
 {
-    public float speed;
+    [SerializeField]
+    private float speed;
+    
     private float height;
     private bool moveUp;
 
